@@ -1,0 +1,20 @@
+{
+  "name": "RealtimeChatAppBackend",
+  "version": "1.0.0",
+  "description": "backend realtimechatapp",
+  "homepage": "https://github.com/rado-design/RealtimeChatAppBackend#readme",
+  "bugs": {
+    "url": "https://github.com/rado-design/RealtimeChatAppBackend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rado-design/RealtimeChatAppBackend.git"
+  },
+  "license": "ISC",
+  "author": "RadoNr <radonirinaratsimbaheriniaina@gmail.com>",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

@@ -1,16 +1,8 @@
 const mongoose = require('mongoose')
 const {ObjectId} = require('bson')
-const jwt = require('jsonwebtoken');
+const TokenService = require('../services/token-services')
 
 const schema = mongoose.Schema;
-
-// model pour stocker les tokens
-const AuthTokenSchema = new schema({
-    authToken : {
-        type : String,
-        required : true
-    }
-});
 
 
 const UserSchema = new schema(
@@ -39,18 +31,24 @@ const UserSchema = new schema(
             type:String,
             required : true
         },
-        authTokens : [
-            AuthTokenSchema
-        ]
     }
 )
 
 //generer un token..
 UserSchema.methods.generateAuthToken = async function(){
-    const authToken = jwt.sign({_id : this._id},'mafybe');
-    this.authTokens.push({authToken});
-    await this.save();
-    return authToken;
+    const accessToken = TokenService.generateJwtToken(this);
+    const refreshToken = TokenService.generateToken()
+
+    // enregistrement du refreshtoken dans la base
+    await TokenService.registerRefreshToken(
+        {
+            userId: this._id,
+            token: refreshToken.token,
+            expiresAt: refreshToken.expiresAt
+        }
+    )
+
+    return {accessToken, refreshToken: refreshToken.token};
 }
 
 //export postSchema sous Cusotmer.

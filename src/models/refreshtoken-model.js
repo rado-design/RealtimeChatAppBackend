@@ -1,6 +1,4 @@
-const mongoose = require('mongoose')
-const {ObjectId} = require('bson')
-
+import mongoose from 'mongoose';
 
 // model pour stocker le refresh token 
 const refreshTokenSchema = new mongoose.Schema({
@@ -10,5 +8,4 @@ const refreshTokenSchema = new mongoose.Schema({
     revoked: { type: Boolean, default: false }
 });
 
-
-module.exports = mongoose.model("RefreshToken", refreshTokenSchema);
+export default mongoose.model("RefreshToken", refreshTokenSchema);

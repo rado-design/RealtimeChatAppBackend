@@ -1,11 +1,9 @@
-const UserServices = require("../services/user-services");
+import UserServices from "../services/user-services.js";
 
+class UserController {
+    static async createUser(req, res) {
 
-class UserController{
-
-    static async createUser (req,res) {
-        
     }
 }
 
-module.exports = UserController
+export default UserController;

@@ -1,8 +1,7 @@
+import User from '../models/user-model.js';
 
-
-class UserUtils{
+class UserUtils {
     static async findUserById(id) {
-        const User = require('../models/user-model'); // import ici
         const user = await User.findById(id);
 
         if (!user) throw new Error("Aucun utilisateur trouvé");
@@ -10,4 +9,4 @@ class UserUtils{
     }
 }
 
-module.exports = UserUtils
+export default UserUtils;

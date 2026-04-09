@@ -12,7 +12,7 @@
   },
   "license": "ISC",
   "author": "RadoNr <radonirinaratsimbaheriniaina@gmail.com>",
-  "type": "commonjs",
+  "type": "module",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -27,6 +27,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.19.1",
     "multer": "^2.0.2",
+    "resend": "^6.5.2",
     "socket.io": "^4.8.1"
   },
   "devDependencies": {

@@ -1,22 +1,18 @@
-const RefreshToken = require('../models/refreshtoken-model')
-const UserUtils = require('../utils/user-utils')
-const jwt = require('jsonwebtoken')
-const crypto = require('crypto')
+import RefreshToken from '../models/refreshtoken-model.js';
+import UserUtils from '../utils/user-utils.js';
+import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
-
-class TokenServices{
-    static async registerRefreshToken(payload){
-        await RefreshToken.create(
-            {
-                userId : payload.userId,
-                token : payload.token,
-                expiresAt : payload.expiresAt
-            }
-        )
-
+class TokenServices {
+    static async registerRefreshToken(payload) {
+        await RefreshToken.create({
+            userId: payload.userId,
+            token: payload.token,
+            expiresAt: payload.expiresAt
+        });
     }
 
-    static async generateToken(){
+    static async generateToken() {
         return {
             token: crypto.randomBytes(64).toString("hex"),
             expiresAt: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
@@ -24,17 +20,17 @@ class TokenServices{
     }
 
     // methode pour générer un nouveau token jwt
-    static async generateJwtToken(user){
+    static async generateJwtToken(user) {
         const AccessToken = jwt.sign(
             { _id: user._id },
             process.env.JWT_SECRET || 'secret',
             { expiresIn: '15m' }
         );
 
-        return AccessToken
+        return AccessToken;
     }
 
-    static async generateNewAccessToken(refreshTokenValue){
+    static async generateNewAccessToken(refreshTokenValue) {
         const storedToken = await RefreshToken.findOne({ token: refreshTokenValue });
 
         if (!storedToken || storedToken.revoked) throw new Error('Invalid refresh token');
@@ -43,7 +39,7 @@ class TokenServices{
         // Ici findUserById va lancer une erreur si user n'existe pas
         const user = await UserUtils.findUserById(storedToken.userId);
 
-        const newAccessToken = await TokenServices.generateJwtToken(user)
+        const newAccessToken = await TokenServices.generateJwtToken(user);
 
         // Rotation du refresh token
         const newRefreshToken = await TokenServices.generateToken();
@@ -55,4 +51,4 @@ class TokenServices{
     }
 }
 
-module.exports = TokenServices
+export default TokenServices;

@@ -51,16 +51,40 @@ Workflow par feature :
 
 ---
 
+## 📡 API Endpoints
+
+### 🔐 Authentification (`/api/auth`)
+- `POST /register` : Créer un nouveau compte.
+- `POST /login` : Se connecter et obtenir un Access Token + Refresh Token (cookie).
+- `GET /refresh-token` : Rafraîchir l'Access Token.
+
+### 👤 Utilisateurs (`/api/users`)
+- `GET /` : Liste des utilisateurs (avec recherche optionnelle).
+
+### 💬 Messagerie (`/api/messages`)
+- `GET /conversations` : Liste toutes les conversations de l'utilisateur.
+- `GET /:conversationId` : Historique des messages d'une conversation.
+- `POST /private` : Démarrer un chat privé avec un autre utilisateur.
+- `POST /groups` : Créer un nouveau groupe de discussion (Admin par défaut).
+- `POST /groups/:groupId/participants` : Ajouter des membres (ID dans le body).
+- `DELETE /groups/:groupId/participants` : Retirer un membre (Admin uniquement).
+- `POST /groups/:groupId/leave` : Quitter un groupe.
+- `PATCH /groups/:groupId/participants/role` : Changer le rôle d'un membre (Admin uniquement).
+
+---
+
 ## 📅 Historique des Implémentations
 
-### [2026-04-09] - [Authentification] Migration ES Modules (ESM)
-- Conversion complète du backend vers ES Modules.
-- Mise à jour de `package.json` et des extensions de fichiers.
+### [2026-04-09] - [Messaging Advanced] Rôles & Gestion de Groupes
+- **Rôles** : Support des rôles `ADMIN` et `MEMBER`.
+- **Modèle** : Transition vers une structure `participants.user` pour stocker les métadonnées de membre.
+- **Gestion** : Ajout des fonctionnalités de retrait de membre, de démission (quitter) et de changement de rôle.
+- **Validation** : 29 tests automatisés couvrant les services et les endpoints.
 
-### [2026-04-09] - [Authentification] Suite de Tests
-- Configuration de Jest en mode ESM.
-- Mise en place de `mongodb-memory-server`.
-- Tests unitaires/intégration fonctionnels pour la gestion utilisateur et jetons.
+### [2026-04-09] - [Messaging & WebSockets] Temps Réel & Chat
+- Implémentation des modèles `Conversation` et `Message`.
+- **WebSockets** : Intégration de `Socket.io` pour la communication temps réel via Rooms.
+- Séparation des services en `ConversationService`, `GroupService` et `MessageService`.
 
 ## 🚀 Lancement Rapide
 ```bash

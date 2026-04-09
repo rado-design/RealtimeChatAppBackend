@@ -13,10 +13,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Connect to MongoDB
-const dbUrl = process.env.ATLAS_DB_URL;
-mongoose.connect(dbUrl)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch(err => console.error('MongoDB connection error:', err));
+if (process.env.NODE_ENV !== 'test') {
+  const dbUrl = process.env.ATLAS_DB_URL;
+  mongoose.connect(dbUrl)
+    .then(() => console.log('Connected to MongoDB'))
+    .catch(err => console.error('MongoDB connection error:', err));
+}
 
 // Routes
 app.use('/api', router);

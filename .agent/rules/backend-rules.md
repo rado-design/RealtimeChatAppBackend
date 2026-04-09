@@ -24,9 +24,14 @@ trigger: always_on
 2. `service`
 3. `controller`
 4. `route`
-5. `tests`
-6. `README`
+5. `tests` (Always write corresponding tests for every implementation)
+6. `README` (Document the implementation with the date)
+7. `Delivery`
 
 ## Testing
 - **Unit**: `tests/services/`
 - **Integration**: `tests/endpoints/` (Supertest)
+
+## Running the Server
+- Always use Doppler to inject environment variables: `doppler run -- npm run dev`
+

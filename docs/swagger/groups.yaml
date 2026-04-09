@@ -1,0 +1,110 @@
+tags:
+  name: Groups
+  description: Group management
+
+/groups:
+  post:
+    summary: Create a new group
+    tags: [Groups]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [title, participants]
+            properties:
+              title: { type: string }
+              participants:
+                type: array
+                items: { type: string }
+              creatorId: { type: string }
+    responses:
+      201:
+        description: Group created
+
+/groups/{groupId}/participants:
+  post:
+    summary: Add participants to group
+    tags: [Groups]
+    parameters:
+      - in: path
+        name: groupId
+        required: true
+        schema: { type: string }
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              participantIds:
+                type: array
+                items: { type: string }
+    responses:
+      200:
+        description: Updated group
+  delete:
+    summary: Remove participant from group
+    tags: [Groups]
+    parameters:
+      - in: path
+        name: groupId
+        required: true
+        schema: { type: string }
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              userId: { type: string }
+              adminId: { type: string }
+    responses:
+      200:
+        description: Updated group
+
+/groups/{groupId}/leave:
+  post:
+    summary: Leave a group
+    tags: [Groups]
+    parameters:
+      - in: path
+        name: groupId
+        required: true
+        schema: { type: string }
+    requestBody:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              userId: { type: string }
+    responses:
+      200:
+        description: Updated group
+
+/groups/{groupId}/participants/role:
+  patch:
+    summary: Update participant role
+    tags: [Groups]
+    parameters:
+      - in: path
+        name: groupId
+        required: true
+        schema: { type: string }
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              userId: { type: string }
+              role: { type: string, enum: [ADMIN, MEMBER] }
+              adminId: { type: string }
+    responses:
+      200:
+        description: Updated group

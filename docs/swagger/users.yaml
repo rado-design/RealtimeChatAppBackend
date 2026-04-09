@@ -1,0 +1,11 @@
+tags:
+  name: Users
+  description: User management
+
+/users/users:
+  post:
+    summary: Create a user (dummy)
+    tags: [Users]
+    responses:
+      200:
+        description: Endpoint reached

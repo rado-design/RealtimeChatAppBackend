@@ -1,0 +1,32 @@
+tags:
+  name: Conversations
+  description: Conversation management
+
+/conversations:
+  get:
+    summary: List user conversations
+    tags: [Conversations]
+    security:
+      - bearerAuth: []
+    responses:
+      200:
+        description: Array of conversations
+
+/conversations/private:
+  post:
+    summary: Start a private chat
+    tags: [Conversations]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [participants]
+            properties:
+              participants:
+                type: array
+                items: { type: string }
+    responses:
+      200:
+        description: Conversation object

@@ -6,7 +6,10 @@ let mongoServer;
 export const connectDB = async () => {
     mongoServer = await MongoMemoryServer.create();
     const uri = mongoServer.getUri();
-    await mongoose.connect(uri);
+    await mongoose.connect(uri, {
+        connectTimeoutMS: 30000,
+        serverSelectionTimeoutMS: 30000
+    });
 };
 
 export const closeDB = async () => {

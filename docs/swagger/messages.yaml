@@ -1,0 +1,16 @@
+tags:
+  name: Messages
+  description: Message history and history management
+
+/messages/{conversationId}:
+  get:
+    summary: Get message history for a conversation
+    tags: [Messages]
+    parameters:
+      - in: path
+        name: conversationId
+        required: true
+        schema: { type: string }
+    responses:
+      200:
+        description: Array of messages

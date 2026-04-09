@@ -1,0 +1,55 @@
+tags:
+  name: Auth
+  description: Authentication management
+
+/auth/register:
+  post:
+    summary: Register a new user
+    tags: [Auth]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [first_name, name, email, password]
+            properties:
+              first_name: { type: string }
+              name: { type: string }
+              email: { type: string }
+              password: { type: string }
+    responses:
+      201:
+        description: User created
+      400:
+        description: Email already used
+
+/auth/login:
+  post:
+    summary: Login user
+    tags: [Auth]
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            required: [email, password]
+            properties:
+              email: { type: string }
+              password: { type: string }
+    responses:
+      200:
+        description: Logged in successfully
+      401:
+        description: Invalid credentials
+
+/auth/refresh-token:
+  get:
+    summary: Refresh access token
+    tags: [Auth]
+    responses:
+      200:
+        description: New access token generated
+      403:
+        description: Invalid refresh token
